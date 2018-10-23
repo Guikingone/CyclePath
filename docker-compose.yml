@@ -1,0 +1,120 @@
+version: "3.7"
+
+services:
+  # Core configuration
+  php-fpm:
+      container_name: ${CONTAINER_NAME}_php-fpm
+      build:
+          args:
+              WORKFOLDER: "${WORKPATH}"
+          context: .
+          target: '${BUILD_TARGET}'
+      environment:
+          BLACKFIRE_LOG_LEVEL: 4
+          BLACKFIRE_SERVER_ID: '${BLACKFIRE_SERVER_ID}'
+          BLACKFIRE_SERVER_TOKEN: '${BLACKFIRE_SERVER_TOKEN}'
+      ports:
+          - '${PHP_PORT}:9000'
+      volumes:
+          - './:${WORKPATH}:rw,delegated'
+          - './docker/php/conf/php.ini:/usr/local/etc/php/php.ini'
+      restart: always
+
+  nginx:
+      container_name: ${CONTAINER_NAME}_nginx
+      build:
+          args:
+              WORKFOLDER: "${WORKPATH}"
+          cache_from:
+              - 'nginx:alpine'
+          context: "./docker/nginx"
+          target: '${BUILD_TARGET}'
+      ports:
+          - '${NGINX_PORT}:80'
+      depends_on:
+          - php-fpm
+      volumes:
+          - './:${WORKPATH}:rw'
+          - './docker/nginx/logs/:/var/log/nginx'
+      restart: always
+
+  # Frontend configuration
+  node:
+      container_name: ${CONTAINER_NAME}_nodejs
+      build:
+          args:
+              WORKFOLDER: '${WORKPATH}'
+          cache_from:
+              - 'node:alpine'
+          context: './docker/node'
+      ports:
+          - 3000:3000
+      volumes:
+          - './:${WORKPATH}:rw,delegated'
+      entrypoint: "yarn watch"
+      restart: always
+
+  # Server tools
+  varnish:
+      container_name: ${CONTAINER_NAME}_varnish
+      build:
+          context: './docker/varnish'
+          target: '${BUILD_TARGET}'
+      volumes:
+          - './docker/varnish/conf:/etc/varnish:rw,cached'
+      ports:
+          - '${VARNISH_PORT}:80'
+      depends_on:
+          - nginx
+      restart: always
+
+  redis:
+      container_name: ${CONTAINER_NAME}_redis
+      image: redis:alpine
+      ports:
+          - '${REDIS_PORT}:6379'
+      restart: always
+
+  rabbit_mq:
+      container_name: ${CONTAINER_NAME}_rabbitmq
+      image: rabbitmq:alpine
+      environment:
+          RABBITMQ_DEFAULT_USER: '${RABBITMQ_USER}'
+          RABBITMQ_DEFAULT_PASS: '${RABBITMQ_PASS}'
+      ports:
+          - '4369:4369'
+          - '5671:5671'
+          - '5672:5672'
+          - '25672:25672'
+      restart: always
+
+  # DB configuration
+  postgresql:
+      container_name: ${CONTAINER_NAME}_postgresql
+      image: postgres:9.6-alpine
+      environment:
+          POSTGRES_DB: '${POSTGRES_DB}'
+          POSTGRES_USER: '${POSTGRES_USER}'
+          POSTGRES_PASSWORD: '${POSTGRES_PASSWORD}'
+      ports:
+          - '${POSTGRES_PORT}:5432'
+      volumes:
+          - 'db-data:/var/lib/postgresql/data:rw'
+      restart: always
+
+  # Performances configuration
+  blackfire:
+      container_name: ${CONTAINER_NAME}_blackfire
+      image: blackfire/blackfire
+      environment:
+          BLACKFIRE_LOG_LEVEL: 4
+          BLACKFIRE_SERVER_ID: '${BLACKFIRE_SERVER_ID}'
+          BLACKFIRE_SERVER_TOKEN: '${BLACKFIRE_SERVER_TOKEN}'
+          BLACKFIRE_CLIENT_ID: '${BLACKFIRE_CLIENT_ID}'
+          BLACKFIRE_CLIENT_TOKEN: '${BLACKFIRE_CLIENT_TOKEN}'
+      volumes:
+          - './:${WORKPATH}:rw,cached'
+      restart: always
+
+volumes:
+    db-data: {}

@@ -1,0 +1,9 @@
+FROM node:alpine as base
+
+ARG WORKFOLDER
+
+ENV WORKPATH ${WORKFOLDER}
+
+RUN mkdir -p ${WORKPATH}
+
+WORKDIR ${WORKPATH}
