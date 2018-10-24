@@ -1,0 +1,14 @@
+# Core
+.env
+.env.dist
+Makefile
+.gitignore
+
+# Docker
+docker-compose.yml
+Dockerfile
+docker
+.dockerignore
+
+# Kubernetes
+k8s

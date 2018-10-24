@@ -4,15 +4,15 @@ import std;
 
 # Used for Blackfire profiling
 acl profile {
-    "172.18.0.1";
+    "nginx";
 }
 
 # Default port
 backend default {
-    .host = "172.18.0.1";
+    .host = "nginx";
     .port = "8080";
     .probe = {
-        .url = "/fr/";
+        .url = "/";
         .timeout = 1s;
         .interval = 5s;
         .window = 5;
