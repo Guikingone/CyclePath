@@ -8,3 +8,7 @@
 
 # Docker
 docker/nginx/logs
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###

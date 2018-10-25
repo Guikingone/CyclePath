@@ -4,6 +4,8 @@ The source code of the CyclePath project.
 
 ## Build
 
+[![SymfonyInsight](https://insight.symfony.com/projects/0faa11b9-4b07-4797-824a-731be7f735a3/mini.svg)](https://insight.symfony.com/projects/0faa11b9-4b07-4797-824a-731be7f735a3)
+
 ## Usage
 
 In order to use this project, you should have Docker & Docker-compose installed, 

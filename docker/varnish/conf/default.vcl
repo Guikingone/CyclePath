@@ -11,13 +11,16 @@ acl profile {
 backend default {
     .host = "nginx";
     .port = "80";
-    .probe = {
-        .url = "/";
-        .timeout = 1s;
-        .interval = 5s;
-        .window = 5;
-        .threshold = 3;
-    }
+    .probe = "nginx";
+}
+
+probe nginx {
+    .url = "/";
+    .expected_response = 200;
+    .timeout = 1s;
+    .interval = 5s;
+    .window = 5;
+    .threshold = 3;
 }
 
 sub vcl_recv {
