@@ -35,6 +35,21 @@ install: composer.json
 	$(COMPOSER) clear-cache
 	make autoload
 
+update: composer.lock
+	$(COMPOSER) update -a -o
+
+require: composer.json
+	$(COMPOSER) req $(PACKAGE) -a -o
+
+require-dev: composer.json
+	$(COMPOSER) req --dev $(PACKAGE) -a -o
+
+remove: composer.lock
+	$(COMPOSER) remove $(PACKAGE) -a -o
+
+remove-dev: composer.lock
+	$(COMPOSER) remove --dev $(PACKAGE) -a -o
+
 autoload: composer.json
 	$(COMPOSER) dump-autoload -a -o
 

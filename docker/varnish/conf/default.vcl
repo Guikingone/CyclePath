@@ -10,7 +10,7 @@ acl profile {
 # Default port
 backend default {
     .host = "nginx";
-    .port = "8080";
+    .port = "80";
     .probe = {
         .url = "/";
         .timeout = 1s;
@@ -54,5 +54,13 @@ sub vcl_backend_response {
     if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
         unset beresp.http.Surrogate-Control;
         set beresp.do_esi = true;
+    }
+}
+
+sub vcl_deliver {
+    if (obj.hits > 0) {
+        set resp.http.x-cache = "HIT";
+    } else {
+        set resp.http.x-cache = "MISS";
     }
 }
