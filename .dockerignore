@@ -12,3 +12,6 @@ docker
 
 # Kubernetes
 k8s
+
+# PHPUnit
+phpunit.xml.dist
