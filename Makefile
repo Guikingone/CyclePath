@@ -1,14 +1,14 @@
 # Constants
 DOCKER_COMPOSE = docker-compose
 DOCKER = docker
-COMPOSER = $(ENV_PHP) composer
 GCLOUD = gcloud
 
 ## Environments
-ENV_PHP = $(DOCKER) exec cyclepath_php-fpm
-ENV_NODE = $(DOCKER) exec cyclepath_nodejs
-ENV_VARNISH = $(DOCKER) exec cyclepath_varnish
-ENV_BLACKFIRE = $(DOCKER) exec cyclepath_blackfire
+ENV_PHP = $(DOCKER_COMPOSE) exec php-fpm
+ENV_NODE = $(DOCKER_COMPOSE) exec node
+ENV_VARNISH = $(DOCKER_COMPOSE) exec varnish
+ENV_BLACKFIRE = $(DOCKER_COMPOSE) exec blackfire
+COMPOSER = $(ENV_PHP) composer
 
 ## Globals commands
 start: docker-compose.yml
@@ -25,6 +25,9 @@ restart: docker-compose.yml
 
 stop: docker-compose.yml
 	$(DOCKER) stop $(docker ps -a -q)
+
+cache-clear: var/cache
+	$(ENV_PHP) rm -rf var/cache/*
 
 clean: ## Allow to delete the generated files and clean the project folder
 	$(ENV_PHP) rm -rf .env ./node_modules ./vendor
@@ -55,19 +58,23 @@ autoload: composer.json
 
 ## NodeJS commands
 yarn_install: package.json
-	    $(ENV_NODE) yarn install
+	$(ENV_NODE) yarn install
 
 yarn_require: package.json
-	    $(ENV_NODE) yarn add $(PACKAGE)
+	$(ENV_NODE) yarn add $(PACKAGE)
 
 yarn_require_dev: package.json
-	    $(ENV_NODE) yarn add --dev $(PACKAGE)
+	$(ENV_NODE) yarn add --dev $(PACKAGE)
 
 encore_watch: webpack.config.js
-	    $(ENV_NODE) yarn watch
+	$(ENV_NODE) yarn watch
 
 encore_production: webpack.config.js
-	    $(ENV_NODE) yarn build
+	$(ENV_NODE) yarn build
+
+## Tools
+phpstan: vendor/bin/phpstan
+	$(ENV_PHP) vendor/bin/phpstan analyse $(FOLDER) --level $(LEVEL)
 
 ## Varnish commands
 varnish_logs: ## Allow to see the varnish logs
@@ -76,23 +83,14 @@ varnish_logs: ## Allow to see the varnish logs
 ## Blackfire commands
 blackfire_php: public/index.php
 	make cache-clear
-	make doctrine-cache ENV=prod
-	$(ENV_PHP) ./bin/console cache:pool:prune
-	make translation
 	make autoload
-	$(ENV_BLACKFIRE) blackfire curl http://172.18.0.1:8080$(URL) --samples $(SAMPLES)
+	$(ENV_BLACKFIRE) blackfire curl http://nginx$(URL) --samples $(SAMPLES)
 
 blackfire_varnish: public/index.php
 	make cache-clear
-	make doctrine-cache ENV=prod
-	$(ENV_PHP) ./bin/console cache:pool:prune
-	make translation
 	make autoload
-	$(ENV_BLACKFIRE) blackfire curl http://172.18.0.1:8000$(URL) --samples $(SAMPLES)
+	$(ENV_BLACKFIRE) blackfire curl http://varnish$(URL) --samples $(SAMPLES)
 
-blackfire-player: scenarios
-	make cache-clear
-	make doctrine-cache ENV=test
-	$(ENV_PHP) ./bin/console cache:pool:prune
-	make translation
-	$(ENV_PHP) blackfire-player run scenarios/main.bkf --endpoint=$(ENDPOINT)
+## Tests
+phpunit: tests
+	$(ENV_PHP) ./bin/phpunit $(FOLDER)

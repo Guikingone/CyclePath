@@ -1,0 +1,12 @@
+steps:
+    - name: 'gcr.io/cloud-builders/docker'
+      id: "php-build"
+      args: ['docker', '--build-arg', 'WORKFOLDER=${_APP_FOLDER_}', "-t", "gcr.io/$PROJECT_ID/php:$COMMIT_SHA", "--target", "${_ENV_PRODUCTION_STAGE_}", "--cache-from", "gcr.io/$PROJECT_ID/php:latest", "."]
+
+    - name: 'gcr.io/cloud-builders/docker'
+      id: 'php-push'
+      args: ['push', 'gcr.io/$PROJECT_ID/php:$COMMIT_SHA']
+
+substitutions:
+    _APP_FOLDER_: "/var/www/cyclepath"
+    _ENV_PRODUCTION_STAGE_: "production"

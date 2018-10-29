@@ -11,16 +11,14 @@ acl profile {
 backend default {
     .host = "nginx";
     .port = "80";
-    .probe = "nginx";
-}
-
-probe nginx {
-    .url = "/";
-    .expected_response = 200;
-    .timeout = 1s;
-    .interval = 5s;
-    .window = 5;
-    .threshold = 3;
+    .probe = {
+        .url = "/";
+        .expected_response = 200;
+        .timeout = 1s;
+        .interval = 5s;
+        .window = 5;
+        .threshold = 3;
+    }
 }
 
 sub vcl_recv {
@@ -62,8 +60,8 @@ sub vcl_backend_response {
 
 sub vcl_deliver {
     if (obj.hits > 0) {
-        set resp.http.x-cache = "HIT";
+        set resp.http.X-cache = "HIT";
     } else {
-        set resp.http.x-cache = "MISS";
+        set resp.http.X-cache = "MISS";
     }
 }

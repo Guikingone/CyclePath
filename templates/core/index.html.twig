@@ -1,5 +1,15 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    {{ 'home.title'|trans }}
+{% endblock %}
+
+{% block navbar_title %}
+    {{ 'home.title'|trans }}
+{% endblock %}
+
 {% block body %}
-    <p>Hello World !</p>
+    <section class="cp-home__body">
+        <p>Hello World !</p>
+    </section>
 {% endblock %}

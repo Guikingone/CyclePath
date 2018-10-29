@@ -37,6 +37,8 @@ services:
       volumes:
           - './:${WORKPATH}:rw'
           - './docker/nginx/logs/:/var/log/nginx'
+      labels:
+          - "traefik.frontend.rule=Host:nginx.docker.localhost"
       restart: always
 
   # Frontend configuration
@@ -87,6 +89,19 @@ services:
           - '5671:5671'
           - '5672:5672'
           - '25672:25672'
+      restart: always
+
+  mercure:
+      container_name: ${CONTAINER_NAME}_mercure
+      image: dunglas/mercure
+      environment:
+          PUBLISHER_JWT_KEY: myPublisherKey
+          SUBSCRIBER_JWT_KEY: mySubcriberKey
+          DEMO: 1
+          ALLOW_ANONYMOUS: 1
+      ports:
+          - '8900:80'
+          - '444:443'
       restart: always
 
   # DB configuration

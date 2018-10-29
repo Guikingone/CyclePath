@@ -1,12 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>CyclePath - {% block title %}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+        {% block stylesheets %}
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+            <link rel="stylesheet" href="{{ preload(asset('build/app-shell.css'), {'as': 'style'}) }}" />
+        {% endblock %}
+        <link rel="manifest" href="{{ asset('manifest.json') }}" />
     </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+    <body class="main">
+        <header class="mdc-top-app-bar mdc-elevation--z4">
+            <div class="mdc-top-app-bar__row">
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                    <a href="#" class="material-icons mdc-top-app-bar__navigation-icon" id="aside_menu">menu</a>
+                    <span class="mdc-top-app-bar__title">{% block navbar_title %}{% endblock %}</span>
+                </section>
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+                    <a href="{{ path('home') }}" class="material-icons mdc-top-app-bar__action-item" aria-label="Home" alt="Home">home</a>
+                </section>
+            </div>
+        </header>
+        <aside class="mdc-drawer mdc-drawer--modal">
+            <div class="mdc-drawer__content">
+                <nav class="mdc-list">
+                    <a class="mdc-list-item mdc-list-item--activated" href="#" aria-selected="true">
+                        <i class="material-icons mdc-list-item__graphic" aria-hidden="true">inbox</i>
+                        <span class="mdc-list-item__text">Inbox</span>
+                    </a>
+                    <a class="mdc-list-item" href="#">
+                        <i class="material-icons mdc-list-item__graphic" aria-hidden="true">send</i>
+                        <span class="mdc-list-item__text">Outgoing</span>
+                    </a>
+                    <a class="mdc-list-item" href="#">
+                        <i class="material-icons mdc-list-item__graphic" aria-hidden="true">drafts</i>
+                        <span class="mdc-list-item__text">Drafts</span>
+                    </a>
+                </nav>
+            </div>
+        </aside>
+        <main class="mdc-layout-grid" id="cp-body__main">
+            {% block body %}{% endblock %}
+        </main>
+        {% block javascripts %}
+            <script src="{{ asset('build/topBar.js') }}"></script>
+        {% endblock %}
     </body>
 </html>

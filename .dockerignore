@@ -7,7 +7,7 @@ Makefile
 # Docker
 docker-compose.yml
 Dockerfile
-docker
+docker/nginx/logs
 .dockerignore
 
 # Kubernetes

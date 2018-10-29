@@ -1,3 +1,6 @@
 controllers:
     resource: ../../src/UI/Action/
     type: annotation
+    prefix: /{_locale}
+    defaults:
+        _locale: '%locale%'
