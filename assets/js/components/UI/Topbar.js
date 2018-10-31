@@ -5,6 +5,7 @@ new MDCTopAppBar(document.querySelector('.mdc-top-app-bar'));
 let navigationBtn = document.querySelector('#aside_menu');
 let drawer = MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
 
-navigationBtn.addEventListener('click', function () {
+navigationBtn.addEventListener('click', function (event) {
+   event.preventDefault();
    drawer.open = true;
 });

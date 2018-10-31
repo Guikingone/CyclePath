@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'registration.title'|trans }}
+{% endblock %}
+
+{% block navbar_title %}
+    {{ 'registration.title'|trans }}
+{% endblock %}
+
+{% form_theme form '_themes/security/_register.html.twig' %}
+
+{% block body %}
+    <section class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell">
+            <div class="cp-body__register">
+                {{ form(form) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('build/register.js') }}"></script>
+{% endblock %}

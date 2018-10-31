@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="length.min">
+                <source>length.min</source>
+                <target>Cette valeur est trop courte !</target>
+            </trans-unit>
+            <trans-unit id="length.max">
+                <source>length.max</source>
+                <target>Cette valeur est trop longue</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

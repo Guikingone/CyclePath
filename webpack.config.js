@@ -1,4 +1,5 @@
 let Encore = require('@symfony/webpack-encore');
+let CopyWebpackPlugin = require("copy-webpack-plugin");
 
 Encore.setOutputPath('public/build/')
     .setPublicPath('/build')
@@ -28,11 +29,30 @@ Encore.setOutputPath('public/build/')
                     }
                 }
             ]
+        },
+        {
+            test: /\.js$/,
+            loader: 'babel-loader',
+            query: {
+                presets: ['es2015'],
+                plugins: ['transform-object-assign']
+            },
         }
     )
 
+    .addPlugin(new CopyWebpackPlugin([
+        {
+            from: "node_modules/@webcomponents/webcomponentsjs/*.js",
+            to: "webcomponents/",
+            flatten: true
+        }
+    ]))
+
+    // CSS
     .addStyleEntry('app-shell', './assets/scss/public/app-shell.scss')
-    .addEntry('topBar', './assets/js/public/TopBar.js')
+
+    // Javascript
+    .addEntry('app-shell-js', './assets/js/public/app-shell.js')
     .addEntry('register', './assets/js/public/register.js')
 ;
 

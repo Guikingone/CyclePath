@@ -3,7 +3,7 @@ html, body {
 }
 
 body {
-  font-family: 'Roboto';
+  font-family: 'Raleway';
   margin: 0;
   padding-top: 0.1px;
   font-size: 14px;
@@ -17,4 +17,8 @@ body {
   display: flex;
   background-color: $mdc-theme-background;
   color: $mdc-theme-on-background;
+
+  .cp-body__main {
+    padding-top: 100px;
+  }
 }

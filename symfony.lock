@@ -158,6 +158,9 @@
             "ref": "e921bdbfe20cdefa3b82f379d1cd36df1bc8d115"
         }
     },
+    "symfony/form": {
+        "version": "v4.1.6"
+    },
     "symfony/framework-bundle": {
         "version": "3.3",
         "recipe": {
@@ -171,6 +174,12 @@
         "version": "v4.1.6"
     },
     "symfony/http-kernel": {
+        "version": "v4.1.6"
+    },
+    "symfony/inflector": {
+        "version": "v4.1.6"
+    },
+    "symfony/intl": {
         "version": "v4.1.6"
     },
     "symfony/mercure": {
@@ -200,6 +209,9 @@
             "ref": "18ebf5a940573a20de06f9c4060101eeb438cf3d"
         }
     },
+    "symfony/options-resolver": {
+        "version": "v4.1.6"
+    },
     "symfony/panther": {
         "version": "v0.2.0"
     },
@@ -212,6 +224,9 @@
             "ref": "b14c7f62fabeedf256d3211b0f704402b5530ba1"
         }
     },
+    "symfony/polyfill-intl-icu": {
+        "version": "v1.9.0"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.9.0"
     },
@@ -223,6 +238,9 @@
     },
     "symfony/profiler-pack": {
         "version": "v1.0.3"
+    },
+    "symfony/property-access": {
+        "version": "v4.1.6"
     },
     "symfony/routing": {
         "version": "4.0",
@@ -258,6 +276,15 @@
             "branch": "master",
             "version": "3.3",
             "ref": "369b5b29dc52b2c190002825ae7ec24ab6f962dd"
+        }
+    },
+    "symfony/validator": {
+        "version": "4.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.1",
+            "ref": "0cdc982334f45d554957a6167e030482795bf9d7"
         }
     },
     "symfony/var-dumper": {

@@ -93,4 +93,5 @@ blackfire_varnish: public/index.php
 
 ## Tests
 phpunit: tests
+	make cache-clear
 	$(ENV_PHP) ./bin/phpunit $(FOLDER)

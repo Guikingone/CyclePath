@@ -1,0 +1,8 @@
+App\Domain\DTO\Security\RegistrationDTO:
+    properties:
+        username:
+            - Length:
+                min: 3
+                max: 25
+                minMessage: 'length.min'
+                maxMessage: 'length.max'

@@ -6,6 +6,18 @@
                 <source>home.title</source>
                 <target>Home</target>
             </trans-unit>
+            <trans-unit id="registration.title">
+                <source>registration.title</source>
+                <target>Registration</target>
+            </trans-unit>
+            <trans-unit id="registration.button_submit">
+                <source>registration.button_submit</source>
+                <target>Create an account</target>
+            </trans-unit>
+            <trans-unit id="main.button_reset">
+                <source>main.button_reset</source>
+                <target>Reset</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -8,7 +8,7 @@
             "name": "Guillaume Loulier",
             "email": "guillaume.loulier@hotmail.fr",
             "homepage": "http://www.guillaumeloulier.fr",
-            "role": "Lead Developer"
+            "role": "Lead Developer & Creator"
         }
     ],
     "require": {
@@ -19,12 +19,14 @@
         "sensio/framework-extra-bundle": "^5.2",
         "symfony/console": "*",
         "symfony/flex": "^1.1",
+        "symfony/form": "*",
         "symfony/framework-bundle": "*",
         "symfony/mercure": "^0.1.0",
         "symfony/mercure-bundle": "^0.1.0",
         "symfony/messenger": "*",
         "symfony/monolog-bundle": "^3.3",
         "symfony/translation": "*",
+        "symfony/validator": "*",
         "symfony/web-link": "*",
         "symfony/webpack-encore-pack": "^1.0",
         "symfony/yaml": "*"
@@ -44,6 +46,10 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/",
+            "App\\Domain\\": "src/Domain/",
+            "App\\Domain\\DTO\\": "src/Domain/DTO/",
+            "App\\Domain\\DTO\\Security\\": "src/Domain/DTO/Security/",
+            "App\\Domain\\DTO\\Security\\Interfaces\\": "src/Domain/DTO/Security/Interfaces/",
             "App\\UI\\": "src/UI/",
             "App\\UI\\Action\\": "src/UI/Action/",
             "App\\UI\\Responder\\": "src/UI/Responder/"
@@ -52,6 +58,8 @@
     "autoload-dev": {
         "psr-4": {
             "App\\Tests\\": "tests/",
+            "App\\Tests\\Domain\\": "tests/Domain/",
+            "App\\Tests\\Domain\\Security\\": "tests/Domain/Security/",
             "App\\Tests\\UI\\": "tests/UI/",
             "App\\Tests\\UI\\Action\\": "tests/UI/Action/",
             "App\\Tests\\UI\\Responder\\": "tests/UI/Responder/"

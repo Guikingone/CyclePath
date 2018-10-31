@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
         {% block stylesheets %}
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway" />
             <link rel="stylesheet" href="{{ preload(asset('build/app-shell.css'), {'as': 'style'}) }}" />
         {% endblock %}
         <link rel="manifest" href="{{ asset('manifest.json') }}" />
@@ -40,11 +41,14 @@
                 </nav>
             </div>
         </aside>
-        <main class="mdc-layout-grid" id="cp-body__main">
+        <main class="mdc-layout-grid cp-body__main">
             {% block body %}{% endblock %}
         </main>
         {% block javascripts %}
-            <script src="{{ asset('build/topBar.js') }}"></script>
+            <script src="{{ preload(asset('build/webcomponents/custom-elements-es5-adapter.js'), {'as': 'script'}) }}"></script>
+            <script src="{{ preload(asset('build/webcomponents/webcomponents-bundle.js'), {'as': 'script'}) }}"></script>
+            <script src="{{ preload(asset('build/webcomponents/webcomponents-loader.js'), {'as': 'script'}) }}"></script>
+            <script type="text/javascript" src="{{ preload(asset('build/app-shell-js.js'), {'as': 'script'}) }}"></script>
         {% endblock %}
     </body>
 </html>
