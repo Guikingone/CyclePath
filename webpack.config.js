@@ -6,30 +6,12 @@ Encore.setOutputPath('public/build/')
     .cleanupOutputBeforeBuild()
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
-    .enableSassLoader()
+    .enableVersioning(Encore.isProduction())
+    .configureUglifyJsPlugin(Encore.isProduction)
+    .enableSassLoader(function(options) {
+        options.includePaths = ['./node_modules'];
+    })
     .addLoader(
-        {
-            test: /\.scss$/,
-            use: [
-                {
-                    loader: 'sass-loader',
-                    options: {
-                        importer: function(url, prev) {
-                            if(url.indexOf('@material') === 0) {
-                                const filePath = url.split('@material')[1];
-                                const nodeModulePath = `./node_modules/@material/${filePath}`;
-                                return {
-                                    file: require('path').resolve(nodeModulePath)
-                                };
-                            }
-                            return {
-                                file: url
-                            };
-                        }
-                    }
-                }
-            ]
-        },
         {
             test: /\.js$/,
             loader: 'babel-loader',
@@ -39,7 +21,6 @@ Encore.setOutputPath('public/build/')
             },
         }
     )
-
     .addPlugin(new CopyWebpackPlugin([
         {
             from: "node_modules/@webcomponents/webcomponentsjs/*.js",
@@ -57,12 +38,5 @@ Encore.setOutputPath('public/build/')
     .addEntry('home-js', './assets/js/public/home.js')
     .addEntry('register-js', './assets/js/public/register.js')
 ;
-
-if (Encore.isProduction()) {
-    Encore
-        .enableVersioning()
-        .configureUglifyJsPlugin()
-    ;
-}
 
 module.exports = Encore.getWebpackConfig();

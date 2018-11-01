@@ -9,3 +9,8 @@ variables:
 steps:
   - script: docker build -f Dockerfile -t $(image_name) --build-arg WORKFOLDER=$(work_path) --target $(target) .
     displayName: 'PHP image build'
+
+  - task: Docker@1
+    displayName: 'PHP image push'
+    inputs:
+      azureContainerRegistry: cyclepath.azurecr.io
