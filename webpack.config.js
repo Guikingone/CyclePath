@@ -7,7 +7,7 @@ Encore.setOutputPath('public/build/')
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
-    .configureUglifyJsPlugin(Encore.isProduction)
+    .configureUglifyJsPlugin()
     .enableSassLoader(function(options) {
         options.includePaths = ['./node_modules'];
     })
