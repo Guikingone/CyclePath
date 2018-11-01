@@ -5,6 +5,7 @@ The source code of the CyclePath project.
 ## Build
 
 [![SymfonyInsight](https://insight.symfony.com/projects/0faa11b9-4b07-4797-824a-731be7f735a3/mini.svg)](https://insight.symfony.com/projects/0faa11b9-4b07-4797-824a-731be7f735a3)
+[![Build Status](https://dev.azure.com/CyclePath/CyclePath/_apis/build/status/Guikingone.CyclePath)](https://dev.azure.com/CyclePath/CyclePath/_build/latest?definitionId=1)
 
 ## Usage
 
