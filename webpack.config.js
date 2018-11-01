@@ -50,10 +50,12 @@ Encore.setOutputPath('public/build/')
 
     // CSS
     .addStyleEntry('app-shell', './assets/scss/public/app-shell.scss')
+    .addStyleEntry('register', './assets/scss/public/register.scss')
 
     // Javascript
     .addEntry('app-shell-js', './assets/js/public/app-shell.js')
-    .addEntry('register', './assets/js/public/register.js')
+    .addEntry('home-js', './assets/js/public/home.js')
+    .addEntry('register-js', './assets/js/public/register.js')
 ;
 
 if (Encore.isProduction()) {

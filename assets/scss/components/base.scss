@@ -21,4 +21,20 @@ body {
   .cp-body__main {
     padding-top: 100px;
   }
+
+  .cp-body__container {
+    text-align: center;
+  }
+
+
+  .cp-body__button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 300px;
+    margin: auto;
+
+    .button-container button {
+      margin: 3px;
+    }
+  }
 }

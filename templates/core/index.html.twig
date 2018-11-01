@@ -1,15 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'home.title'|trans }}
+    {{- 'home.title'|trans -}}
 {% endblock %}
 
 {% block navbar_title %}
-    {{ 'home.title'|trans }}
+    {{- 'home.title'|trans -}}
 {% endblock %}
 
 {% block body %}
     <section class="cp-home__body">
-        <app-notification></app-notification>
+        <app-homepage-hero></app-homepage-hero>
+        <app-homepage-content></app-homepage-content>
     </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ preload(asset('build/home-js.js'), {'as': 'script'}) }}"></script>
 {% endblock %}

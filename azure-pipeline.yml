@@ -1,0 +1,11 @@
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+variables:
+  image_name: 'cyclepath-php'
+  work_path: '/var/www/cyclepath'
+  target: 'production'
+
+steps:
+  - script: docker build -f Dockerfile -t $(image_name) --build-arg WORKFOLDER=$(work_path) --target $(target) .
+    displayName: 'PHP image build'

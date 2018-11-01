@@ -3,6 +3,10 @@ class AppNotification extends HTMLElement {
         super();
     }
 
+    getUser() {
+        return this.getAttribute('user');
+    }
+
     connectedCallback() {
         this.innerHTML = "<div><p>Hello from notification element !</p></div>";
     }

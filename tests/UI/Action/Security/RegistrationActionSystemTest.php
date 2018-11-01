@@ -13,16 +13,16 @@ declare(strict_types=1);
 
 namespace App\Tests\UI\Action\Security;
 
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Client;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Panther\PantherTestCase;
 
 /**
  * Class RegistrationActionSystemTest.
  *
  * @package App\Tests\UI\Action\Security
  */
-final class RegistrationActionSystemTest extends PantherTestCase
+final class RegistrationActionSystemTest extends WebTestCase
 {
     /**
      * @var Client|null
@@ -73,6 +73,8 @@ final class RegistrationActionSystemTest extends PantherTestCase
         $form = $crawler->selectButton($button)->form($data);
 
         $this->client->submit($form);
+
+        dd($this->client->getResponse());
 
         static::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         static::assertGreaterThan(0, $crawler->filter(sprintf('html:contains("%s")', $title))->count());

@@ -5,8 +5,8 @@
         {{ form_row(form.password) }}
         {{ form_row(form.profileImage) }}
         <div class="cp-body__button-container">
-            <button class="mdc-button">{{ 'main.button_reset'|trans }}</button>
-            <button class="mdc-button mdc-button--raised">{{ 'registration.button_submit'|trans }}</button>
+            <button class="mdc-button" type="reset">{{ 'main.button_reset'|trans }}</button>
+            <button class="mdc-button mdc-button--raised" type="submit">{{ 'registration.button_submit'|trans }}</button>
         </div>
     {{ form_end(form) }}
 {% endblock %}

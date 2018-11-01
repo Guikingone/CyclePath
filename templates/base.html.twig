@@ -41,7 +41,8 @@
                 </nav>
             </div>
         </aside>
-        <main class="mdc-layout-grid cp-body__main">
+        <main class="mdc-layout-grid cp-body__main cp-body__container">
+            <app-notification user="{{ app.user|json_encode }}"></app-notification>
             {% block body %}{% endblock %}
         </main>
         {% block javascripts %}

@@ -41,7 +41,8 @@ final class RegistrationType extends AbstractType
                 'attr' => [
                     'minLength' => 2,
                     'maxLength' => 25
-                ]
+                ],
+                'help' => 'registration.username_help'
             ])
             ->add('email', EmailType::class)
             ->add('password', PasswordType::class)
