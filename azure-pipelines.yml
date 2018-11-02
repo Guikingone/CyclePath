@@ -2,7 +2,7 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 variables:
-  image_name: 'cyclepath-php'
+  image_name: 'cyclepath-php:$(Build.BuildId)'
   image_cache: 'cyclepath.azurecr.io/cyclepath-php:$(Build.BuildId)'
   work_path: '/var/www/cyclepath'
   target: 'production'
