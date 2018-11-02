@@ -4,9 +4,12 @@ FROM php:fpm-alpine as base
 ARG WORKFOLDER
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV PANTHER_NO_SANDBOX 1
+ENV PANTHER_CHROME_DRIVER_BINARY /usr/lib/chromium/chromedriver
+ENV PANTHER_WEB_SERVER_PORT 9750
 ENV WORKPATH ${WORKFOLDER}
 
-RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS zip icu-dev postgresql-dev gnupg graphviz make autoconf git unzip zlib-dev curl rabbitmq-c rabbitmq-c-dev \
+RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS libzip-dev zip icu-dev postgresql-dev gnupg graphviz make autoconf git unzip zlib-dev curl chromium chromium-chromedriver go rabbitmq-c rabbitmq-c-dev \
     && docker-php-ext-configure pgsql --with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install zip intl pdo_pgsql pdo_mysql opcache json pdo_pgsql pgsql mysqli \
     && pecl install apcu redis grpc protobuf amqp \

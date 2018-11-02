@@ -13,19 +13,19 @@ declare(strict_types=1);
 
 namespace App\Tests\UI\Action\Security;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Client;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Panther\Client as Panther;
+use Symfony\Component\Panther\PantherTestCase;
 
 /**
  * Class RegistrationActionSystemTest.
  *
  * @package App\Tests\UI\Action\Security
  */
-final class RegistrationActionSystemTest extends WebTestCase
+final class RegistrationActionSystemTest extends PantherTestCase
 {
     /**
-     * @var Client|null
+     * @var Client|Panther|null
      */
     private $client = null;
 
@@ -34,7 +34,7 @@ final class RegistrationActionSystemTest extends WebTestCase
      */
     protected function setUp()
     {
-        $this->client = static::createClient();
+        $this->client = static::createPantherClient();
     }
 
     /**
@@ -49,8 +49,7 @@ final class RegistrationActionSystemTest extends WebTestCase
     {
         $crawler = $this->client->request('GET', $url);
 
-        static::assertGreaterThan(0, $crawler->filter(sprintf('html:contains("%s")', $title))->count());
-        static::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        static::assertContains($title, $crawler->filter('title')->html());
     }
 
     /**
@@ -59,10 +58,13 @@ final class RegistrationActionSystemTest extends WebTestCase
      * @param string $url
      * @param string $title
      * @param string $button
-     * @param array  $data
+     * @param array $data
      * @param string $errorMessage
      *
      * @return void
+     *
+     * @throws \Facebook\WebDriver\Exception\NoSuchElementException
+     * @throws \Facebook\WebDriver\Exception\TimeOutException
      */
     public function testRegistrationFormFailure(string $url, string $title, string $button, array $data, string $errorMessage): void
     {
@@ -74,9 +76,8 @@ final class RegistrationActionSystemTest extends WebTestCase
 
         $this->client->submit($form);
 
-        dd($this->client->getResponse());
+        $this->client->waitFor('');
 
-        static::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         static::assertGreaterThan(0, $crawler->filter(sprintf('html:contains("%s")', $title))->count());
         static::assertGreaterThan(0, $crawler->filter(sprintf('html:contains("%s")', $errorMessage))->count());
     }

@@ -95,3 +95,7 @@ blackfire_varnish: public/index.php
 phpunit: tests
 	make cache-clear
 	$(ENV_PHP) ./bin/phpunit $(FOLDER)
+
+## GCP commands
+gcp-build: cloudbuild.yaml
+	$(GCLOUD) builds submit --config cloudbuild.yaml

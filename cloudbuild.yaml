@@ -1,0 +1,40 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    id: "PHP pull latest"
+    args: ['pull', 'gcr.io/$PROJECT_ID/${_APP_PHP_NAME_}:latest']
+
+  - name: "gcr.io/cloud-builders/docker"
+    id: "PHP build"
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/${_APP_PHP_NAME_}', '--build-arg', 'WORKFOLDER=${_APP_WORKFOLDER_}', '--target', '${_APP_TARGET_}', '--cache-from', 'gcr.io/$PROJECT_ID/${_APP_PHP_NAME_}', '.']
+    waitFor:
+        - "PHP pull latest"
+
+  - name: "gcr.io/cloud-builders/docker"
+    id: "PHP push"
+    args: ['push', 'gcr.io/$PROJECT_ID/${_APP_PHP_NAME_}']
+    waitFor:
+         - "PHP build"
+
+  - name: "gcr.io/cloud-builders/docker"
+    id: "Nginx pull latest"
+    args: ['pull', 'gcr.io/$PROJECT_ID/${_APP_NGINX_NAME_}:latest']
+    waitFor:
+         - "PHP push"
+
+  - name: "gcr.io/cloud-builders/docker"
+    id: "Nginx build"
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/${_APP_NGINX_NAME_}', '--build-arg', 'WORKFOLDER=${_APP_WORKFOLDER_}', '--target', '${_APP_TARGET_}', '--cache-from', 'gcr.io/$PROJECT_ID/${_APP_NGINX_NAME_}', './docker/nginx']
+    waitFor:
+        - "Nginx pull latest"
+
+  - name: "gcr.io/cloud-builders/docker"
+    id: "Nginx push"
+    args: ['push', 'gcr.io/$PROJECT_ID/${_APP_NGINX_NAME_}']
+    waitFor:
+        - "Nginx build"
+
+substitutions:
+    _APP_PHP_NAME_: "php"
+    _APP_NGINX_NAME_: "nginx"
+    _APP_WORKFOLDER_: "/var/www/cyclepath"
+    _APP_TARGET_: "production"

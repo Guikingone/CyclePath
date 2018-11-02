@@ -17,8 +17,10 @@
         <!-- define your env variables for the test env here -->
 
         <!-- ###+ symfony/messenger ### -->
-        <!-- MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages -->
+        <env name="MESSENGER_TRANSPORT_DSN" value="amqp://cyclePath:cyclePath@rabbit_mq/%2f/messages" />
         <!-- ###- symfony/messenger ### -->
+
+        <env name="REDIS_DSN" value="redis://redis" />
     </php>
 
     <testsuites>
@@ -35,5 +37,6 @@
 
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        <listener class="Symfony\Component\Panther\ServerListener" />
     </listeners>
 </phpunit>
