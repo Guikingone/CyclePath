@@ -8,6 +8,9 @@ Encore.setOutputPath('public/build/')
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
     .configureUglifyJsPlugin()
+    .configureBabel(function(babel) {
+        babel.presets = ['es2015'];
+    })
     .enableSassLoader(function(options) {
         options.includePaths = ['./node_modules'];
     })
