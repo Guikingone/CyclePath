@@ -14,5 +14,5 @@ steps:
     displayName: 'PHP image push'
     inputs:
       azureContainerRegistry: cyclepath.azurecr.io
-      imageName: 'cyclepath.azurecr.io/portfolio:$(Build.BuildId)'
+      imageName: 'cyclepath.azurecr.io/cyclepath-php:$(Build.BuildId)'
       command: push
