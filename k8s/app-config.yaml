@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: app-config
+data:
+    APP_ENV: 'prod'
+    REDIS_PORT: '6379'
+    REDIS_HOST: 'redis'
+    REDIS_URL: 'redis://redis'

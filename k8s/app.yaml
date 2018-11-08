@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: app
+spec:
+    selector:
+        matchLabels:
+            env: production
+    template:
+        metadata:
+            labels:
+                env: production
+        spec:
+            containers:
+                - name: nginx
+                  image: nginx:alpine
+                  livenessProbe:
+                      initialDelaySeconds: 5
+                      failureThreshold: 2
+                      periodSeconds: 5
+                      httpGet:
+                          path: /
+                          port: 80
+                  ports:
+                      - containerPort: 80
