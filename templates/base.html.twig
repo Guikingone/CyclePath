@@ -3,13 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <title>CyclePath - {% block title %}{% endblock %}</title>
-        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
+        <meta name="theme-color" content="#689f38" />
         {% block stylesheets %}
-            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway" />
+            <link rel="stylesheet" href="{{ preload('https://fonts.googleapis.com/icon?family=Material+Icons', {'as': 'style'}) }}" />
+            <link rel="stylesheet" href="{{ preload('https://fonts.googleapis.com/css?family=Raleway', {'as': 'style'}) }}" />
             <link rel="stylesheet" href="{{ preload(asset('build/app-shell.css'), {'as': 'style'}) }}" />
         {% endblock %}
         <link rel="manifest" href="{{ asset('manifest.json') }}" />
+        <meta name="Description" content="{% block description %}{% endblock %}" />
     </head>
     <body class="main">
         <header class="mdc-top-app-bar mdc-elevation--z4">
@@ -26,22 +28,19 @@
         <aside class="mdc-drawer mdc-drawer--modal">
             <div class="mdc-drawer__content">
                 <nav class="mdc-list">
-                    <a class="mdc-list-item mdc-list-item--activated" href="#" aria-selected="true">
-                        <i class="material-icons mdc-list-item__graphic" aria-hidden="true">inbox</i>
-                        <span class="mdc-list-item__text">Inbox</span>
-                    </a>
-                    <a class="mdc-list-item" href="#">
-                        <i class="material-icons mdc-list-item__graphic" aria-hidden="true">send</i>
-                        <span class="mdc-list-item__text">Outgoing</span>
-                    </a>
-                    <a class="mdc-list-item" href="#">
-                        <i class="material-icons mdc-list-item__graphic" aria-hidden="true">drafts</i>
-                        <span class="mdc-list-item__text">Drafts</span>
+                    <a class="mdc-list-item mdc-list-item--activated" href="{{ path('home') }}" aria-selected="true">
+                        <i class="material-icons mdc-list-item__graphic" aria-hidden="true">home</i>
+                        <span class="mdc-list-item__text">Home</span>
                     </a>
                 </nav>
             </div>
         </aside>
         <main class="mdc-layout-grid cp-body__main cp-body__container">
+            <noscript>
+                <div>
+                    <p>{{ 'This website require Javascript, please be sure to enable it or feel free to contact us !' }}</p>
+                </div>
+            </noscript>
             <app-notification user="{{ app.user|json_encode }}"></app-notification>
             {% block body %}{% endblock %}
         </main>
@@ -49,7 +48,7 @@
             <script src="{{ preload(asset('build/webcomponents/custom-elements-es5-adapter.js'), {'as': 'script'}) }}"></script>
             <script src="{{ preload(asset('build/webcomponents/webcomponents-bundle.js'), {'as': 'script'}) }}"></script>
             <script src="{{ preload(asset('build/webcomponents/webcomponents-loader.js'), {'as': 'script'}) }}"></script>
-            <script type="text/javascript" src="{{ preload(asset('build/app-shell-js.js'), {'as': 'script'}) }}"></script>
+            <script type="text/javascript" src="{{ asset('build/app-shell-js.js') }}"></script>
         {% endblock %}
     </body>
 </html>

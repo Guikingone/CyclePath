@@ -27,6 +27,9 @@
         <testsuite name="Project Test Suite">
             <directory>tests</directory>
         </testsuite>
+        <testsuite name="E2E">
+            <directory>tests/UI/Action/**/*SystemTest</directory>
+        </testsuite>
     </testsuites>
 
     <filter>
@@ -37,6 +40,5 @@
 
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
-        <listener class="Symfony\Component\Panther\ServerListener" />
     </listeners>
 </phpunit>

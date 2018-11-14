@@ -2,3 +2,4 @@ mercure:
     hubs:
         default:
             url: '%env(MERCURE_HUB)%'
+            jwt: '%env(MERCURE_JWT)%'

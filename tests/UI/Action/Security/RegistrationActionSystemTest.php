@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace App\Tests\UI\Action\Security;
 
-use Symfony\Component\BrowserKit\Client;
 use Symfony\Component\Panther\Client as Panther;
 use Symfony\Component\Panther\PantherTestCase;
 
@@ -25,7 +24,7 @@ use Symfony\Component\Panther\PantherTestCase;
 final class RegistrationActionSystemTest extends PantherTestCase
 {
     /**
-     * @var Client|Panther|null
+     * @var Panther|null
      */
     private $client = null;
 
@@ -38,6 +37,8 @@ final class RegistrationActionSystemTest extends PantherTestCase
     }
 
     /**
+     * @group E2E
+     *
      * @dataProvider provideUrls
      *
      * @param string $url
@@ -53,6 +54,8 @@ final class RegistrationActionSystemTest extends PantherTestCase
     }
 
     /**
+     * @group E2E
+     *
      * @dataProvider provideWrongFormData
      *
      * @param string $url
@@ -62,21 +65,16 @@ final class RegistrationActionSystemTest extends PantherTestCase
      * @param string $errorMessage
      *
      * @return void
-     *
-     * @throws \Facebook\WebDriver\Exception\NoSuchElementException
-     * @throws \Facebook\WebDriver\Exception\TimeOutException
      */
     public function testRegistrationFormFailure(string $url, string $title, string $button, array $data, string $errorMessage): void
     {
-        $this->client->followRedirects();
-
         $crawler = $this->client->request('GET', $url);
 
         $form = $crawler->selectButton($button)->form($data);
 
         $this->client->submit($form);
 
-        $this->client->waitFor('');
+        $this->client->followRedirects(true);
 
         static::assertGreaterThan(0, $crawler->filter(sprintf('html:contains("%s")', $title))->count());
         static::assertGreaterThan(0, $crawler->filter(sprintf('html:contains("%s")', $errorMessage))->count());
